@@ -1,8 +1,8 @@
-CREATE DATABASE IF NOT EXISTS `freedb_o8WFZ0gt`
+CREATE DATABASE IF NOT EXISTS `defaultdb`
   DEFAULT CHARACTER SET utf8mb4
   COLLATE utf8mb4_unicode_ci;
 
-USE `freedb_o8WFZ0gt`;
+USE `defaultdb`;
 
 CREATE TABLE IF NOT EXISTS `contactos` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,

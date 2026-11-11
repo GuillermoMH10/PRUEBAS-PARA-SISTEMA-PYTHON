@@ -1,3 +1,4 @@
+import ssl
 import pymysql
 from pymysql.cursors import DictCursor
 from config import Config
@@ -6,7 +7,13 @@ from config import Config
 class Database:
     @classmethod
     def get_connection(cls):
-        """Conecta exclusivamente al servidor MySQL configurado."""
+        """Conecta al servidor MySQL de Aiven con SSL requerido."""
+        ssl_ctx = None
+        if getattr(Config, 'MYSQL_SSL_REQUIRED', False):
+            ssl_ctx = ssl.create_default_context()
+            ssl_ctx.check_hostname = False
+            ssl_ctx.verify_mode = ssl.CERT_NONE
+
         conn = pymysql.connect(
             host=Config.MYSQL_HOST,
             port=Config.MYSQL_PORT,
@@ -16,7 +23,8 @@ class Database:
             charset='utf8mb4',
             cursorclass=DictCursor,
             connect_timeout=15,
-            autocommit=True
+            autocommit=True,
+            ssl=ssl_ctx
         )
         return conn
 
