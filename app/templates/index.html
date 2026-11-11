@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Directorio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="layout">
+        <header class="topbar">
+            <div class="brand">
+                <span class="brand-dot"></span>
+                <h1>Directorio</h1>
+                <span class="counter" id="totalCount">{{ contactos|length }}</span>
+            </div>
+
+            <div class="topbar-actions">
+                <div class="search-box">
+                    <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <input type="text" id="searchInput" placeholder="Filtrar..." autocomplete="off">
+                </div>
+            </div>
+        </header>
+
+        <main class="workspace">
+            <!-- Panel de Formulario -->
+            <aside class="panel-form">
+                <div class="panel-header">
+                    <h2 id="formTitle">Nuevo registro</h2>
+                    <button type="button" id="btnCancelEdit" class="btn-text hidden">Cancelar</button>
+                </div>
+
+                <form id="contactForm" autocomplete="off">
+                    <input type="hidden" id="contactoId" value="">
+
+                    <div class="field">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" id="nombre" name="nombre" required maxlength="100">
+                    </div>
+
+                    <div class="field">
+                        <label for="apellido">Apellido</label>
+                        <input type="text" id="apellido" name="apellido" required maxlength="100">
+                    </div>
+
+                    <div class="field">
+                        <label for="telefono">Teléfono</label>
+                        <input type="tel" id="telefono" name="telefono" required maxlength="30">
+                    </div>
+
+                    <div class="field">
+                        <label for="correo">Correo</label>
+                        <input type="email" id="correo" name="correo" required maxlength="150">
+                    </div>
+
+                    <div class="form-footer">
+                        <button type="submit" id="btnSubmit" class="btn-primary">
+                            Guardar
+                        </button>
+                    </div>
+                </form>
+            </aside>
+
+            <!-- Panel de Tabla -->
+            <section class="panel-list">
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Teléfono</th>
+                                <th>Correo</th>
+                                <th class="col-actions"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            {% for c in contactos %}
+                            <tr data-id="{{ c.id }}"
+                                data-nombre="{{ c.nombre }}"
+                                data-apellido="{{ c.apellido }}"
+                                data-telefono="{{ c.telefono }}"
+                                data-correo="{{ c.correo }}">
+                                <td class="cell-primary">{{ c.nombre }}</td>
+                                <td>{{ c.apellido }}</td>
+                                <td class="cell-mono">{{ c.telefono }}</td>
+                                <td class="cell-muted">{{ c.correo }}</td>
+                                <td class="col-actions">
+                                    <div class="row-actions">
+                                        <button type="button" class="action-btn btn-edit" title="Editar">
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M12 20h9"></path>
+                                                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                                            </svg>
+                                        </button>
+                                        <button type="button" class="action-btn btn-delete" title="Eliminar">
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <polyline points="3 6 5 6 21 6"></polyline>
+                                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                    <div id="emptyState" class="empty-state {% if contactos %}hidden{% endif %}">
+                        <span>Sin registros</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="toast" class="toast hidden"></div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
