@@ -1,8 +1,8 @@
-CREATE DATABASE IF NOT EXISTS `4518892_pruebasdepython`
+CREATE DATABASE IF NOT EXISTS `freedb_o8WFZ0gt`
   DEFAULT CHARACTER SET utf8mb4
   COLLATE utf8mb4_unicode_ci;
 
-USE `4518892_pruebasdepython`;
+USE `freedb_o8WFZ0gt`;
 
 CREATE TABLE IF NOT EXISTS `contactos` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
